@@ -1,0 +1,47 @@
+# input: cell-level data
+features_file: './data/imc/cell_data.csv'
+
+# input: clinical data (labels, survival, cancer stage)
+LABEL_DATA: './data/imc/clinical_data.csv'
+
+# input: data splits
+FOLDS_PATH: './data/imc/folds'
+FOLDS_FORMAT: 'split_{}_{}' # split_i_{train|val|test}.csv  i in {0..FOLDS-1}
+FOLDS: 5 # num of splits
+
+# column used to group cells into samples
+SAMPLE_ID_COLUMN: 'ID'
+
+# column in LABEL_DATA holding cancer stage
+STAGE_COLUMN: 'Stage'
+
+# stage values that map to class 0 (all others map to class 1)
+STAGE_CLASS_0: [0]
+
+# cell columns aggregated into the per-patient feature vector
+FEATURE_LIST: [
+  'Alt MAC',
+  'B cell',
+  'Cancer',
+  'Cl MAC',
+  'Cl Mo',
+  'DCs cell',
+  'Endothelial cell',
+  'Int Mo',
+  'Mast cell',
+  'NK cell',
+  'NONE',
+  'Neutrophils',
+  'Non-Cl Mo',
+  'T other',
+  'Tc',
+  'Th',
+  'Treg',
+]
+
+# include cancer stage as an extra feature
+use_stage_as_feature: True
+
+# display options
+SHOW_PLOTS: False
+BLOCK_ON_PLOTS: False

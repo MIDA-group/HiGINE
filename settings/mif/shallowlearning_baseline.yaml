@@ -1,0 +1,41 @@
+# input: cell-level data
+features_file: './data/mif/cell_data.csv'
+
+# input: clinical data (labels, survival, cancer stage)
+LABEL_DATA: './data/mif/clinical_data.csv'
+
+# input: data splits
+FOLDS_PATH: './data/mif/folds'
+FOLDS_FORMAT: 'split_{}_{}' # split_i_{train|val|test}.csv  i in {0..FOLDS-1}
+FOLDS: 10 # num of splits
+
+# column used to group cells into samples
+SAMPLE_ID_COLUMN: 'Sample Name'
+
+# column in LABEL_DATA holding cancer stage
+STAGE_COLUMN: 'Stage (7th ed.)'
+
+# stage values that map to class 0 (all others map to class 1)
+STAGE_CLASS_0: ['Ia', 'Ib']
+
+# cell columns aggregated into the per-patient feature vector
+FEATURE_LIST: [
+  'Tissue Category',
+  'Nucleus Area (pixels)',
+  'Nucleus Compactness',
+  'Nucleus Axis Ratio',
+  'Nucleus DAPI Mean (Normalized Counts, Total Weighting)',
+  'Nucleus Opal 620 Mean (Normalized Counts, Total Weighting)',
+  'Entire Cell Opal 520 Mean (Normalized Counts, Total Weighting)',
+  'Entire Cell Opal 540 Mean (Normalized Counts, Total Weighting)',
+  'Entire Cell Opal 570 Mean (Normalized Counts, Total Weighting)',
+  'Entire Cell Opal 690 Mean (Normalized Counts, Total Weighting)',
+  'Entire Cell Autofluorescence Mean (Normalized Counts, Total Weighting)',
+]
+
+# include cancer stage as an extra feature
+use_stage_as_feature: False
+
+# display options
+SHOW_PLOTS: False
+BLOCK_ON_PLOTS: False

@@ -1,0 +1,19 @@
+# input: clinical data (survival time/event)
+LABEL_DATA: './data/imc/clinical_data.csv'
+
+# input: the train_coregraphs.py result directories to compare, one panel each.
+# Set each `path` to a run's output directory (the one holding its
+# predictions_hbest_test_split_*.csv) and `label` to that panel's caption.
+# The names below are just the README's convention for the paper's ablation:
+# the same pipeline run twice, with ADD_STAGE True and False. See "Baseline &
+# Figures" in the README.
+CORE_RESULTS: [
+  {path: './results/train_subgraphs/train_coregraphs_stage', label: 'With Cancer Stage'},
+  {path: './results/train_subgraphs/train_coregraphs_nostage', label: 'Without Cancer Stage'},
+]
+
+# output: figure
+output_path: './figures/KM_plot.png'
+
+# number of cross-validation folds/runs to aggregate over
+FOLDS: 5

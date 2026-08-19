@@ -1,0 +1,37 @@
+# input: cell-level data and clinical labels
+features_file: './data/imc/cell_data.csv'
+labels_file: './data/imc/clinical_data.csv'
+
+# input: clusters from subsample.py
+subsamples_path: './samples/subsamples'
+
+# output: subgraphs and core graphs
+results_path: './samples/graphs'
+
+# cell columns used as node features
+FEATURE_LIST: [
+  'Alt MAC',
+  'B cell',
+  'Cancer',
+  'Cl MAC',
+  'Cl Mo',
+  'DCs cell',
+  'Endothelial cell',
+  'Int Mo',
+  'Mast cell',
+  'NK cell',
+  'NONE',
+  'Neutrophils',
+  'Non-Cl Mo',
+  'T other',
+  'Tc',
+  'Th',
+  'Treg',
+]
+
+# min-max normalize the features above
+NORMALIZE_FEATURES: False
+
+# graph construction
+CRITICAL: 20 # max radius of subgraph edges
+H_CRITICAL: 330 # max radius of coregraph edges

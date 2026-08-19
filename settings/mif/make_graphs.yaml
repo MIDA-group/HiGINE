@@ -1,0 +1,31 @@
+# input: cell-level data and clinical labels
+features_file: './data/mif/cell_data.csv'
+labels_file: './data/mif/clinical_data.csv'
+
+# input: clusters from subsample.py
+subsamples_path: './samples/subsamples'
+
+# output: subgraphs and core graphs
+results_path: './samples/graphs'
+
+# cell columns used as node features
+FEATURE_LIST: [
+  'Tissue Category',
+  'Nucleus Area (pixels)',
+  'Nucleus Compactness',
+  'Nucleus Axis Ratio',
+  'Nucleus DAPI Mean (Normalized Counts, Total Weighting)',
+  'Nucleus Opal 620 Mean (Normalized Counts, Total Weighting)',
+  'Entire Cell Opal 520 Mean (Normalized Counts, Total Weighting)',
+  'Entire Cell Opal 540 Mean (Normalized Counts, Total Weighting)',
+  'Entire Cell Opal 570 Mean (Normalized Counts, Total Weighting)',
+  'Entire Cell Opal 690 Mean (Normalized Counts, Total Weighting)',
+  'Entire Cell Autofluorescence Mean (Normalized Counts, Total Weighting)',
+]
+
+# min-max normalize the features above
+NORMALIZE_FEATURES: True
+
+# graph construction
+CRITICAL: 20 # max radius of subgraph edges
+H_CRITICAL: 330 # max radius of coregraph edges

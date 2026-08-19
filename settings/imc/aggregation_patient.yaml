@@ -1,0 +1,31 @@
+# input: subgraph training results
+base_path: './results/train_subgraphs'
+
+# input: coregraph results, relative to base_path
+core_path: 'train_coregraphs'
+
+# input: prediction file name pattern (dataset, split)
+HBEST_FILE: 'predictions_hbest_{}_split_{}.csv'
+
+# input: clinical data (cancer stage)
+LABEL_DATA: './data/imc/clinical_data.csv'
+
+# number of cross-validation folds/runs to aggregate over
+FOLDS: 5
+
+# column in LABEL_DATA holding cancer stage
+STAGE_COLUMN: 'Stage'
+
+# stage values that map to class 0 (all others map to class 1)
+STAGE_CLASS_0: [0]
+
+# use cancer stage in aggregation
+ADD_STAGE: [True, False]
+
+# aggregation methods to compare
+LEARNING_METHODS: ['svc', 'rf', 'logreg', 'knn']
+NON_LEARNING_METHODS: ['mean', 'max', 'median', 'weighted', 'majority', null]
+
+# display options
+SHOW_PLOTS: False
+BLOCK_ON_PLOTS: False

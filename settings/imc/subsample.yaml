@@ -1,0 +1,19 @@
+# input: cell-level data
+features_file: './data/imc/cell_data.csv'
+
+# output: index_output.json
+results_path: './samples/subsamples'
+
+# column used to group cells into samples
+SAMPLE_ID_COLUMN: 'ID'
+
+# reserve a cluster ID range per sample (max clusters per sample, incl augmentations)
+CLUSTERS_PER_SAMPLE: 10000
+
+# subsampling information
+average_x_stepsize: 300
+nodes_per_subsample: 1000
+subsample_y_overlap: 750 # nodes
+subsample_x_overlap: 225 # pixel
+y_step_size: 4
+min_num_nodes: 200

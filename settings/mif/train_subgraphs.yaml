@@ -1,0 +1,71 @@
+CUDA_DEVICE: 0
+
+# input: graphs from make_graphs.py
+graphs_path: './samples/graphs'
+
+# input: clinical labels
+labels_file: './data/mif/clinical_data.csv'
+
+# input: data splits
+folds_path: './data/mif/folds'
+folds_format: 'split_{}_{}' # split_i_{train|val|test}.csv  i in {0..FOLDS-1}
+FOLDS: 10
+
+# input: names of previous step parameter files
+SUBSAMPLING_PARAMS: 'subsample_PARAMS.yaml'
+GRAPH_PARAMS: 'graph_PARAMS.yaml'
+
+# output: model directory
+results_path: './results/train_subgraphs'
+
+# training
+#SEED: [314, 159, 265, 358]
+SEED: [314]
+
+BS: 512
+NUM_WORKERS: 12
+
+EPOCHS: 15
+MIN_EPOCHS: 2
+FINAL_EPOCHS_INCLUDING_VALIDATION_SET: 1
+
+#SAVE_BEST_METRIC: 'val_AP'
+#SAVE_BEST_METRIC: 'val_Acc'
+SAVE_BEST_METRIC: 'val_AUROC'
+
+OPTIMIZER_NAME: 'adamw'  # adam, adamw, OR sgd
+LR: 0.8e-3 # Initial learning rate
+OPTARGS: {
+  #'momentum': 0.9,
+  'weight_decay':0.04
+}
+
+SCHEDULER_NAME: 'exp'  # none OR exp
+SCHEDARGS: {
+  'gamma':0.96
+}
+
+LOSS_NAME: 'CEL'        # cel OR bce
+LOSSARGS: {
+  'label_smoothing':0.0
+}
+USE_LOSS_WEIGHTS: False #True
+
+AUGMENTATION: 'feature_noise'
+SIGMA: 0.35
+
+# model
+MODEL_NAME: 'GINE3'
+KWARGS: {
+  'num_class':2,
+  'conv_nhid':[20, 20, 10],
+  'gnn_name':['GINE', 'GINE', 'GINE'],
+  'gnn_pool':'sag',
+  'gnn_pool_ratio':[0.5, 0.5, 0.5],
+  'lin_nhid':[30, 5],
+  'lin_dropout':[0.15, 0.15],
+  'skip_connection':True,
+  'drop_node':[0.3, 0.2, 0.1],
+  'drop_edge':[0.3, 0.2, 0.1],
+  'readout_name':'gmp'
+}

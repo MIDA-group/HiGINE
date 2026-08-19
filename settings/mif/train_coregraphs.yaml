@@ -1,0 +1,95 @@
+CUDA_DEVICE: 0
+
+# input: graphs from make_graphs.py
+graphs_path: './samples/graphs'
+
+# input: clinical data (cancer stage)
+LABEL_DATA: './data/mif/clinical_data.csv'
+
+# input: data splits
+folds_path: './data/mif/folds'
+folds_format: 'split_{}_{}' # split_i_{train|val|test}.csv  i in {0..FOLDS-1}
+FOLDS: 10
+
+# input: subgraph training results
+base_path: './results/train_subgraphs'
+
+# input: names of previous step parameter files
+SUBSAMPLING_PARAMS: 'subsample_PARAMS.yaml'
+GRAPH_PARAMS: 'graph_PARAMS.yaml'
+SUBTRAIN_PARAMS: 'train_PARAMS.yaml'
+
+# input: subgraph models, relative to base_path
+MODEL_FILE: 'best/GINE3_best_seed_{}_split_{}.pt'
+
+# input: if subgraph predictions are already extracted, load them from here
+# (relative to base_path)
+#PRED_PATH: 'h_train_extra_138_seed314'
+
+# output: coregraph results, relative to base_path
+results_path: 'train_coregraphs'
+
+# column in LABEL_DATA holding cancer stage
+STAGE_COLUMN: 'Stage (7th ed.)'
+
+# stage values that map to class 0 (all others map to class 1)
+STAGE_CLASS_0: ['Ia', 'Ib']
+
+# delimiter used to parse the patient ID out of each subgraph's full ID string
+ID_SPLIT: 'BOMI'
+
+# no training, only extracting features
+ONLY_ENCODE: False
+
+# z-score normalize subgraph predictions (using train-set stats) before
+# training the coregraph model on them
+NORMALIZE_SUBGRAPH_PREDS: True
+
+# use cancer stage as node feature
+ADD_STAGE: True
+
+# layer of the subgraph used for feature extraction {0, -1, -2}
+LAYER_OF_SUB: -1
+
+# training
+BS: 512
+NUM_WORKERS: 12
+
+EPOCHS: 15
+VAL_EPOCH: 1
+FINAL_EPOCHS_INCLUDING_VALIDATION_SET: 1
+
+SAVE_BEST_METRIC: 'val_AUROC'
+
+OPTIMIZER_NAME: 'adamw'  # adam, adamw, OR sgd
+LR: 0.8e-3 # Initial learning rate
+OPTARGS: {
+  'weight_decay':0.04
+}
+
+SCHEDULER_NAME: 'exp'  # none, exp OR lin
+SCHEDARGS: {
+  'gamma':0.96
+}
+
+LOSS_NAME: 'CEL'        # cel OR bce
+USE_LOSS_WEIGHTS: False #True
+
+AUGMENTATION: 'feature_noise'
+SIGMA: 0.4
+
+# model
+MODEL_NAME: 'GINE3'
+KWARGS: {
+  'num_class':2,
+  'conv_nhid':[35],
+  'gnn_name':['GINE'],
+  'gnn_pool':'sag',
+  'gnn_pool_ratio':[0.5],
+  'lin_nhid':[5],
+  'lin_dropout':[0.15],
+  'skip_connection':True,
+  'drop_node':[0.1],
+  'drop_edge':[0.1],
+  'readout_name':'max+mean'
+}
